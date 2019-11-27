@@ -232,23 +232,11 @@ exports.seed = async function (knex) {
     'Exercise and play a sport',
   ];
 
-  // for (var user in firstname) {
-  //   console.log(await bcrypt.hash('password', 10));
-  //   numusers++
-  //   await knex('mykek.user').insert({
-  //     givenname: firstname[user],
-  //     surname: lastname[user],
-  //     password: await bcrypt.hash('password', 10),
-  //
-
-  //   })
-  // }
-
   var testusers = [
-    { givenname: 'josiah', surname: 'schiesss', password: await bcrypt.hash('admin', 10), username: 'holo' }
+    { givenname: 'josiah', surname: 'schiesss', password: await bcrypt.hash('admin', 10), username: 'holo' },
   ]
 
-  for (const user in testusers) {
+  for (const user in firstname) {
     console.log(testusers[user]);
     await knex('mykek.user').insert(testusers[user])
   }

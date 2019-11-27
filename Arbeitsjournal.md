@@ -29,11 +29,22 @@ Das Projekt: Todo-App.
 * loginverfahren
 
 ### Arbeitsjournal
+
+#### Tag 1
 * Datenbank angepasst 
 	* zur tabbelle user eine neuen Attribut password hinzugefuegt.
 	* fuelldaten angepasst.
 	* hashen des passworts erfolgt mit bcrypt v 3.0.0
-* login path erstellen
-	* JWT brauchen /api/login
-
+* login path erstellt
+	* JWT brauchen /login
+	* /login returnt Bearer Auth token
+#### Tag 2
+* logger erstellt, welcher die zeit und path logged
+	* evt. noch den user logged
+	* evt. noch die daten in eine file speichern
+* Files aufgesplittet um Modularitaet zu gewinnen
+* bug fixes und code verschloenert
+#### Todo 
 * frontend anpassen
+	* views erstellen
+	 	* /login | die seite aufder man kommt wenn man nicht eingeloggt ist bzw. ein invaliden token hat
