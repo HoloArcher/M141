@@ -1,4 +1,6 @@
 
+const bcrypt = require('../node_modules/bcrypt');
+
 exports.seed = async function (knex) {
   // Deletes ALL existing entries
   var numusers = 0
@@ -230,23 +232,37 @@ exports.seed = async function (knex) {
     'Exercise and play a sport',
   ];
 
-  for (var user in firstname) {
-    numusers++
-    await knex('mykek.user').insert({
-      givenname: firstname[user],
-      surname: lastname[user]
-    })
+  // for (var user in firstname) {
+  //   console.log(await bcrypt.hash('password', 10));
+  //   numusers++
+  //   await knex('mykek.user').insert({
+  //     givenname: firstname[user],
+  //     surname: lastname[user],
+  //     password: await bcrypt.hash('password', 10),
+  //
+
+  //   })
+  // }
+
+  var testusers = [
+    { givenname: 'josiah', surname: 'schiesss', password: await bcrypt.hash('admin', 10), username: 'holo' }
+  ]
+
+  for (const user in testusers) {
+    console.log(testusers[user]);
+    await knex('mykek.user').insert(testusers[user])
   }
-  var n = 100
+
+  var n = 3
   for (let i = 0; i < n; i++) {
     console.log(i);
     numtodos++
-    let temp = firstname[Math.floor(Math.random() * firstname.length)]
-    let cond = {
-      givenname: temp,
-    }
+    // let temp = testusers[Math.floor(Math.random() * testusers.length)]
+    // let cond = {
+    //   givenname: temp,
+    // }
     // console.log(JSON.stringify(cond));
-    let owner = await knex('user').select('id').where(cond);
+    let owner = await knex('user').select('id').where({username: 'holo'});
     // console.log(owner[0].id);
     await knex('todo').insert({
       text: todos[Math.floor(Math.random() * todos.length)],
@@ -257,7 +273,7 @@ exports.seed = async function (knex) {
       owner_id: owner[0].id
     })
   }
-  
+
 
   // console.log(numusers+ ' Users created')
   // console.log(numtodos+ ' Todos created')

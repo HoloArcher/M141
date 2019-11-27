@@ -2,6 +2,9 @@ const express = require('express')
 const knex = require('./db/knex.js')
 const app = express()
 app.use(express.json())
+const bcrypt = require('./node_modules/bcrypt');
+const jwt = require('jsonwebtoken');
+
 /* 
   priority codes
     0 niedrig
@@ -57,7 +60,7 @@ async function return_owner_id(body) {
 }
 
 app.get('/api/todo/users', async (req, res) => {
-  let data = await knex('user');
+  let data = await knex('user').select('fullname', 'surname', 'id','givenname', 'username');
   res.send(data);
 })
 
@@ -137,6 +140,34 @@ app.delete('/api/todo/:id', async (req, res) => {
     res.status = e.status
     console.error(e)
   }
+})
+
+
+app.post('/api/login/', async function  (req, res) {
+	var { username, password } = req.body;
+	try {
+		var user = await knex.from('users')
+			.where({ username })
+		user = user[0]
+		var db_password = user.password
+		user.password = null
+
+	} catch (e) {
+		res.status(403).send('invalid username or password')
+	}
+	if (user.length !== 0 && await bcrypt.compare(password, db_password)) {
+		var tokendata = {
+			id: user.id,
+			username: user.username,
+			name: user.name,
+			role: user.role,
+		}
+		var token = jwt.sign(tokendata, process.env.JWT_TOKEN);
+		var auth = 'Bearer ' + token
+		res.send(auth).status(200);
+	} else {
+		res.status(403).send('invalid username or password');
+	}
 })
 
 app.listen(3000, () => console.log("Listening on port 3000"))
