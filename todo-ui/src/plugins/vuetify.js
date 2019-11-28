@@ -4,15 +4,13 @@ import 'vuetify/dist/vuetify.min.css';
 
 Vue.use(Vuetify);
 
-var kek = '000000'
-
 
 
 export default new Vuetify({
   theme: {
     themes: {
       light: {
-        primary: '#9C27B0',
+        primary: '#0082b4',
         secondary: '#424242',
         accent: '#82B1FF',
         error: '#FF5252',

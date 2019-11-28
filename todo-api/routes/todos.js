@@ -32,17 +32,15 @@ router.get('/todo', async (req, res) => {
 
 
 router.post('/todo', async (req, res) => {
-	// if end_date is not defined
-	console.log('Post request');
 	try {
-		var owner_id = await return_owner_id(req.body.owner);
+		var owner_id = req.decoded_token.id 
 		let obj = {
 			text: req.body.text,
 			start_date: (req.body.start_date) ? new Date(formated_date_from_US(req.body.start_date)) : new Date(),
 			end_date: (req.body.end_date) ? new Date(formated_date_from_US(req.body.end_date)) : null,
 			status_id: req.body.status_id,
 			priority_id: req.body.priority_id,
-			owner_id: owner_id[0].id
+			owner_id: owner_id
 		}
 		let results = await knex('todo')
 			.insert(obj)

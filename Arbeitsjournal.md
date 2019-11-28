@@ -48,3 +48,9 @@ Das Projekt: Todo-App.
 * frontend anpassen
 	* views erstellen
 	 	* /login | die seite aufder man kommt wenn man nicht eingeloggt ist bzw. ein invaliden token hat
+
+
+
+
+### Fragen an marco
+* wieso ist cors noetig?

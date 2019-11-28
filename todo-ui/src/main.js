@@ -7,6 +7,19 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+router.beforeEach((to, from, next) => {
+  var authorized = (localStorage.getItem('token')) ? localStorage.getItem('token') : undefined;
+  if (typeof authorized === 'undefined' && to.path == '/todos') {
+    return next('/')
+  } else if (authorized && to.path === '/') {
+    next('/todos')
+  }
+  else {
+    next()
+  }
+
+})
+
 new Vue({
   vuetify,
   router,
