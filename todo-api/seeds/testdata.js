@@ -25,11 +25,9 @@ var todos = [
 
 exports.seed = async function (knex) {
   await knex('todo').del()
-
   await knex('user').del()
-  
-  await knex('priority').del()
   await knex('status').del()
+  await knex('priority').del()
 
   await knex('priority').insert([
     { priority: 'niedrig' },
@@ -59,18 +57,22 @@ exports.seed = async function (knex) {
   var number_todos = 4
 
   for (user of testusers) {
-    console.log(user);
     let owner = await knex('user').select('id').where({ username: user.username });
 
     for (let i = 0; i < number_todos; i++) {
 
+      var states = await knex('status')
+      var priority = await knex('priority')
+
+      var status_id = states[Math.floor(Math.random() * states.length)].id
+      var priority_id = priority[Math.floor(Math.random() * priority.length)].id
 
       await knex('todo').insert({
         text: todos[Math.floor(Math.random() * todos.length)],
         start_date: new Date(),
         end_date: new Date(),
-        status_id: Math.floor(Math.random() * 5) + 1,
-        priority_id: Math.floor(Math.random() * 3) + 1,
+        status_id,
+        priority_id,
         owner_id: owner[0].id
       })
 

@@ -7,7 +7,7 @@ module.exports = {
     connection: {
       host: "localhost",
       database: 'todo',
-      user: 'root',
+      user: 'todologin api',
       password: 'admin',
       insecureAuth: true,
       port: 3306

@@ -13,9 +13,8 @@ exports.up = async function (knex, Promise) {
 };
 
 exports.down = async function (knex, Promise) {
-
 	await knex.schema.dropTable('todo')
-	await knex.schema.dropTable('priority')
-	await knex.schema.dropTable('user')
 	await knex.schema.dropTable('status')
+	await knex.schema.dropTable('user')
+	await knex.schema.dropTable('priority') 
 };

@@ -56,7 +56,7 @@ router.post('/todo', async (req, res) => {
 router.put('/todo/:id', async (req, res) => {
 	console.log('Put Request \n');
 	try {
-		var owner_id = await return_owner_id(req.body.owner)
+		var owner_id = req.decoded_token.id 
 		let results = await knex('todo')
 			.update({
 				text: req.body.text,
@@ -64,7 +64,7 @@ router.put('/todo/:id', async (req, res) => {
 				end_date: (req.body.end_date) ? new Date(formated_date_from_US(req.body.end_date)) : null,
 				status_id: req.body.status_id,
 				priority_id: req.body.priority_id,
-				owner_id: owner_id[0].id
+				owner_id: owner_id
 			})
 			.where('id', req.params.id)
 		res.json(results)
@@ -88,11 +88,6 @@ router.delete('/todo/:id', async (req, res) => {
 	}
 })
 
-
-
-
-
-
 function formated_date_to_US(el) {
 	// converts mm/dd/yyy to yyyy-mm-dd
 	const [month, day, year] = el.split("/");
@@ -104,22 +99,5 @@ function formated_date_from_US(el) {
 	return `${month}/${day}/${year}`;
 }
 
-async function return_owner_id(body) {
-	/** 
-	 * takes: username in  "surname givenname"
-	 * returns: ID of user
-	 * if the user doesnt exist creates user und returns ID
-	 */
-	var [surname, givenname] = body.split(' ')
-
-	let owner_id = await knex('user').select('id').where('fullname', '=', body);
-	if (!body) {
-		owner_id = [{ id: 1 }];
-	} else if (!owner_id.length) {
-		owner_id = await knex('user').insert([{ surname: surname, givenname: givenname }]);
-		owner_id = [{ id: owner_id[0] }];
-	}
-	return owner_id
-}
 
 module.exports = router

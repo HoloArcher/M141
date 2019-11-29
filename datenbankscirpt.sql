@@ -29,5 +29,5 @@ CREATE TABLE `todo` (
   KEY `owner_id_idx` (`owner_id`),
   CONSTRAINT `id_priority` FOREIGN KEY (`priority_id`) REFERENCES `priority` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `id_status` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  CONSTRAINT `owner_id` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`) ON DELETE SET CASCADE ON UPDATE CASCADE
+  CONSTRAINT `owner_id` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
 );
