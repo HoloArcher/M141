@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var knex = require('../db/knex');
-const bcrypt = require('../node_modules/bcrypt');
-const jwt = require('jsonwebtoken');
 
 router.get('/todo/users', async (req, res) => {
 	let data = await knex('user').select('username');
@@ -20,7 +18,7 @@ router.get('/todo/statuses', async (req, res) => {
 
 router.get('/todo', async (req, res) => {
 	// may the gods have mercy
-	var shittycode = await knex('main').map(el => {
+	var shittycode = await knex('main').where({user_id: req.decoded_token.id}).map(el => {
 		var obj = el
 		// console.log(el.start_date);
 		obj.start_date = (el.start_date) ? formated_date_to_US(new Date(el.start_date).toLocaleDateString()) : null

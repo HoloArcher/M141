@@ -14,8 +14,8 @@
 
               <v-spacer />
             </v-toolbar>
+              <v-form @submit="login" lazy-validation v-model="valid" ref="form">
             <v-card-text>
-              <v-form lazy-validation v-model="valid" ref="form">
                 <v-text-field
                   label="Username"
                   name="todo_username"
@@ -33,13 +33,12 @@
                   type="password"
                   :rules="rules"
                 />
-              </v-form>
             </v-card-text>
             <v-card-actions>
               <v-spacer />
-              {{ valid }}
-              <v-btn @click="login" color="primary">Login</v-btn>
+              <v-btn  @click="login" color="primary">Login</v-btn>
             </v-card-actions>
+              </v-form>
           </v-card>
         </v-col>
       </v-row>
@@ -79,7 +78,9 @@ export default {
         var user = response.data.user;
         localStorage.setItem('user', JSON.stringify(user))
         localStorage.setItem("token", token);
-        location.reload()
+        this.$emit('changekek')
+        
+        this.$router.push('/todos')
 
       }
     }

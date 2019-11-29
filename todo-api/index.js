@@ -8,6 +8,7 @@ const cors = require('cors');
 
 app.use(express.json())
 app.use(cors())
+
 app.use('/api/', auth, logger, router)
 
 app.listen(3000, () => console.log("Listening on port 3000"))
@@ -47,7 +48,7 @@ async function auth(req, res, next) {
       var token = req.headers.authorization.split(' ')[1];
       req.token = token;
       try {
-        req.decoded_token = jwt.verify(token, process.env.JWT_TOKEN)
+        req.decoded_token = jwt.verify(token, process.env.JWT_TOKEN, {algorithm: 'HS256'})
 
       } catch (e) {
         res.send('invalid token').status(403)

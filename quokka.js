@@ -1,11 +1,27 @@
-const fs = require('fs');
-
-var sql = fs.readFileSync('./datenbankscirpt.sql',{encoding: 'utf-8'})
-
-
-var k = sql.split(');')
-console.log(k[3]);
-
-for (n in k ) {
-	console.log(k[n]);
+/**
+ * Documentation
+ * @param {number} el1 some number
+ * @param {number} el2 same
+ */
+function kek(el1, el2) {
+	
 }
+
+/**
+ * documentation
+ * @param {string} something word to be returned
+ */
+function something(el) {
+	return el
+}
+
+var object = {something : 'something else'};
+
+
+
+for (const i in object) {
+	console.log(i);
+}
+
+var dfsdkf = dslfkjs
+const qsdflaksj = ldskfj
