@@ -6,15 +6,14 @@ module.exports = {
     version: '8.0',
     connection: {
       host: "localhost",
-      database: 'mykek',
-      user:     'holo',
-      password:  'gibbiX12345',
-      
-      insecureAuth : true,
-      port : 3306
+      database: 'todo',
+      user: 'root',
+      password: 'admin',
+      insecureAuth: true,
+      port: 3306
     },
   },
-
-
-
+  migrations: {
+    tableName: 'migrations'
+  },
 };
