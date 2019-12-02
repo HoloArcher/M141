@@ -49,7 +49,6 @@
 <script>
 import axios from "@/api";
 import router from "../router";
-import store from '../store';
 export default {
   data() {
     return {
@@ -74,12 +73,15 @@ export default {
           password: this.password
         };
         var response = await axios().post("/login", data);
+        console.log(response);
+        
+
+        // const [Bearer, token] = response.data.split(' ');
         var token = response.data.token.split(" ")[1];
         var user = response.data.user;
         localStorage.setItem('user', JSON.stringify(user))
         localStorage.setItem("token", token);
         this.$emit('changekek')
-        
         this.$router.push('/todos')
 
       }

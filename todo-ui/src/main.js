@@ -8,6 +8,7 @@ import router from './router'
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
+  console.log(App.data.kek);
   var authorized = (localStorage.getItem('token')) ? localStorage.getItem('token') : undefined;
   if (typeof authorized === 'undefined' && to.path == '/todos') {
     return next('/')
@@ -17,7 +18,6 @@ router.beforeEach((to, from, next) => {
   else {
     next()
   }
-
 })
 
 new Vue({
