@@ -32,11 +32,13 @@
                   prepend-icon="lock"
                   type="password"
                   :rules="rules"
+                  @change="login"
+                
                 />
             </v-card-text>
             <v-card-actions>
               <v-spacer />
-              <v-btn  @click="login" color="primary">Login</v-btn>
+              <v-btn  @click="login"  color="primary">Login</v-btn>
             </v-card-actions>
               </v-form>
           </v-card>
@@ -73,15 +75,11 @@ export default {
           password: this.password
         };
         var response = await axios().post("/login", data);
-        console.log(response);
-        
-
-        // const [Bearer, token] = response.data.split(' ');
         var token = response.data.token.split(" ")[1];
         var user = response.data.user;
         localStorage.setItem('user', JSON.stringify(user))
         localStorage.setItem("token", token);
-        this.$emit('changekek')
+        this.$emit('set_user')
         this.$router.push('/todos')
 
       }

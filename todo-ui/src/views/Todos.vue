@@ -1,15 +1,15 @@
 <template>
-  <v-app id="app"  >
-    <v-card square style="height: 100vh" fluid  :color="background_color" >
+  <v-app id="app">
+    <v-card square style="height: 100vh" fluid :color="background_color">
       <link
         href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"
         rel="stylesheet"
       />
-        <!-- <v-text-field @change="$emit('changekek')"></v-text-field> -->
+      <!-- <v-text-field @change="$emit('changekek')"></v-text-field> -->
       <v-container grid-list-xs flat>
         <v-layout wrap column>
           <v-alert fixed bottom dismissible v-model="alert.on" type="error">{{ alert.status }}</v-alert>
-          <v-card  :dark="kek" text tile>
+          <v-card :dark="kek" text tile>
             <v-app-bar :color="app_bar_color_format" :dark="!kek">
               <v-app-bar-nav-icon></v-app-bar-nav-icon>
               <v-toolbar-title>
@@ -108,6 +108,7 @@
 
                         <v-col md="5">
                           <v-select
+                            icon
                             :items="status_array"
                             v-model="dialog_obj.status"
                             label="Status"
@@ -118,20 +119,17 @@
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn
-                        @click="dialog = false; reset_dialog_data();"
-                        color="error"
-                      >Cancel</v-btn>
+                      <v-btn @click="dialog = false; reset_dialog_data();" color="error">Cancel</v-btn>
                       <v-btn
                         v-if="editing"
                         v-bind:disabled="!valid"
-                        @click="alterTodo();"
+                        @click="alterTodo(); dialog = false;"
                         color="success"
                       >save todo</v-btn>
                       <v-btn
                         v-else
                         v-bind:disabled="!valid"
-                        @click="addTodo(); valid = true; ;"
+                        @click="addTodo(); valid = true; dialog = false;"
                         color="success"
                       >add todo</v-btn>
                     </v-card-actions>
@@ -144,7 +142,7 @@
                     bottom
                     absolute
                     prepend-icon="add"
-                    color="green lighten-2"
+                    color="secondary"
                     dark
                     v-on="on"
                     @click="editing = false; valid = false;"
@@ -155,14 +153,48 @@
               </v-dialog>
             </v-card-actions>
             <v-card-text>
-              <v-data-table  :headers="headers" :items="todos" hide-default class="elevation-1">
-                <template v-slot:item.start_date="{ item }">{{ item.start_date | format_date }}</template>
-                <template v-slot:item.end_date="{ item  }">{{ item.end_date | format_date }}</template>
+              <v-data-table
+                :search="search"
+                :headers="headers"
+                :items="todos"
+                hide-default
+                class="elevation-1"
+                single-expand="false"
+                :expanded.sync="expanded"
+                item-key="id"
+                show-expand
+              >
+                <template v-slot:top>
+                  <v-row>
+                    <v-spacer></v-spacer>
+                    <v-col>
+                      <v-text-field
+                        v-model="search"
+                        append-icon="search"
+                        label="Search"
+                        single-line
+                        hide-details
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </template>
+                <template v-slot:expanded-item="{ headers, item }">
+                  <td :colspan="headers.length">
+                    <v-col>
+                      <v-row v-for="(index, column) of item" :key="column" style="border: solid 0.5px black">
+                        <v-col>{{ column }}</v-col>
+                        <v-col>{{ index }}</v-col>
+                      </v-row>
+                    </v-col>
+                  </td>
+                </template>
+                <!-- <template v-slot:item.start_date="{ item }">{{ item.start_date | format_date }}</template>
+                <template v-slot:item.end_date="{ item  }">{{ item.end_date | format_date }}</template>-->
                 <template v-slot:item.action="{ item }">
                   <v-icon
                     small
                     class="mr-2"
-                    @click=" editing= true;dialog_obj = item; dialog = true;"
+                    @click=" editing= true; dialog_obj = item; dialog = true;"
                   >edit</v-icon>
                   <v-icon small @click="deleteTodo(todos.indexOf(item))">delete</v-icon>
                 </template>
@@ -183,11 +215,13 @@ export default {
 
   data() {
     return {
+      search: "",
       alert: {
         on: false,
         status: "",
         type: ""
       },
+      expanded: [],
       valid: true,
       kek: false,
       editing: false,
@@ -209,21 +243,26 @@ export default {
       altertodo: {},
       todos: [],
       headers: [
-        { text: "id", value: "id" },
-        { text: "owner", value: "owner" },
-        { text: "text", value: "text" },
-        { text: "priority", value: "priority" },
-        { text: "status", value: "status" },
-        { text: "startdatum", value: "start_date" },
-        { text: "enddatum", value: "end_date" },
-        { text: "Actions", value: "action", sortable: false }
+        { text: "ID", value: "id" },
+        // { text: "", value: "owner" },
+        { text: "Todo", value: "text" },
+        { text: "Priority", value: "priority" },
+        { text: "Status", value: "status" },
+        // {
+        //   text: "Start Date",
+        //   value: "start_date",
+        //   prependIcon: "calendar_today"
+        // },
+        // { text: "End Date", value: "end_date" },
+        { text: "Actions", value: "action", sortable: false },
+        { text: "", value: "data-table-expand" }
       ],
       dialog: false,
       menu1: false,
       menu2: false
     };
   },
-  props: ['oof'],
+  props: ["oof"],
   filters: {
     format_date(el) {
       if (el) {
@@ -273,7 +312,6 @@ export default {
     }
   },
   computed: {
-    
     rules() {
       const rules = [];
       // const rule = v =>
@@ -287,9 +325,9 @@ export default {
     },
     name_rule() {
       let rules = [];
-      let rule = v => (v.match('\.{2,} .{2,}') || '' ? true: 'formating wrong')
-      rules.push(rule)
-      return rules
+      let rule = v => (v.match(".{2,} .{2,}") || "" ? true : "formating wrong");
+      rules.push(rule);
+      return rules;
     },
     /**
      * wenn dark_theme aktiv ist, wird die farbe primary entsprechen
@@ -299,23 +337,21 @@ export default {
       return end;
     },
     background_color() {
-      var end = this.kek ? "secondary darken-1 " : "";
+      var end = this.kek ? "#404040" : "";
 
       return end;
-    },
-
+    }
   },
   methods: {
     /**
      * stellt das object dialog_obj
      */
     async reset_dialog_data() {
-      this.$refs.form.resetValidation()
+      this.$refs.form.resetValidation();
       this.dialog_obj = {};
       var response = await axios().get("/api/todo");
       this.todos = response.data;
     },
-
 
     async addTodo() {
       // console.trace(owner);
@@ -346,13 +382,12 @@ export default {
       try {
         await axios().put(`/api/todo/${this.dialog_obj.id}`, data);
         await this.reset_dialog_data();
-
       } catch (e) {
         this.alert.on = true;
         this.alert.type = "error";
         this.alert.status = e;
       }
-      this.dialog = false
+      this.dialog = false;
     },
     async deleteTodo(index) {
       let todo_id = this.todos[index].id;
@@ -364,7 +399,7 @@ export default {
 </script>
 
 <style>
-html{
+html {
   overflow-y: hidden;
 }
 ::-webkit-scrollbar {

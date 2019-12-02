@@ -4,9 +4,14 @@
     <v-app-bar app color="primary" dark>
       <v-toolbar-title>Application</v-toolbar-title>
       <v-spacer></v-spacer>
-      <span style="padding-right: 10px" v-if="user">logged in as {{ user.username }}</span>
+      <div>
+        <v-icon>person</v-icon>
+        <span v-if="user" style="margin-right: 20px">
+          <strong>Logged in as {{ user.username }}</strong>
+        </span>
+      </div>
 
-      <v-btn color="white" v-if="user" text @click="logout">
+      <v-btn color="white" v-if="user" text @click="logout" outlined>
         <strong>Logout</strong>
       </v-btn>
       <!-- <v-text-field v-model="oof"></v-text-field> -->
@@ -33,7 +38,7 @@ export default {
   }),
   computed: {},
   mounted() {
-    this.set_user()
+    this.set_user();
   },
   methods: {
     logout() {
