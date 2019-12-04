@@ -53,6 +53,10 @@ Das Projekt: Todo-App.
 	* migration user_group erstellt.
 		* foreign key zu group und user erstellt
 
+	* notes
+		* bei mysql muessen beide relationen in einer constraint signed sein
+		* bei knex werden increments() automatisch auf unsigned gesetzt
+
 ### todo 
 	* presentation vorbereiten
 	* gruppen implimentation
