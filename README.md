@@ -48,9 +48,11 @@ Das Projekt: Todo-App.
 	* views erstellen
 	 	* /login | die seite aufder man kommt wenn man nicht eingeloggt ist bzw. ein invaliden token hat
 #### Tag 3
-	* presentation vorbereiten
 	* kleine UI anpassungen
+	* bug fix mit todos erstellen
 
+### todo 
+	* presentation vorbereiten
 
 
 
