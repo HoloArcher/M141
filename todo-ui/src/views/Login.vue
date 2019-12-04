@@ -4,7 +4,7 @@
       href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"
       rel="stylesheet"
     />
-    <v-container fluid>
+    <v-container>
       <v-row align="center" justify="center">
         <v-col cols="12" sm="8" md="4">
           <v-card class="elevation-12">
@@ -79,7 +79,7 @@ export default {
         var user = response.data.user;
         localStorage.setItem('user', JSON.stringify(user))
         localStorage.setItem("token", token);
-        this.$emit('set_user')
+        this.$emit('set_login_variables')
         this.$router.push('/todos')
 
       }

@@ -26,9 +26,12 @@ app.post('/login/', logger, async function (req, res) {
     res.status(403).send('invalid username or password')
   }
   if (user.length !== 0 && await bcrypt.compare(password, db_password)) {
+    console.log(user.config);
+    
     var tokendata = {
       id: user.id,
       username: user.username,
+      config: JSON.parse(user.config)
     }
     var token = jwt.sign(tokendata, process.env.JWT_TOKEN);
     var auth = 'Bearer ' + token

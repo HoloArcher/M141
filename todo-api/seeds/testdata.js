@@ -45,8 +45,8 @@ exports.seed = async function (knex) {
   ])
   
   var testusers = [
-    { givenname: 'josiah', surname: 'schiesss', password: await bcrypt.hash('admin', 10), username: 'holo' },
-    { givenname: 'barack', surname: 'obama', password: await bcrypt.hash('israel', 10), username: 'obama' },
+    { givenname: 'josiah', surname: 'schiesss', password: await bcrypt.hash('admin', 10), username: 'holo', config: '{"darktheme": false, "colorTheme":"#0082b4"}' },
+    { givenname: 'barack', surname: 'obama', password: await bcrypt.hash('israel', 10), username: 'obama', config: '{"darktheme": true, "colorTheme":"#545454"}' },
   ]
 
   // inserts users

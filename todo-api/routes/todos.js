@@ -49,7 +49,17 @@ router.post('/todo', async (req, res) => {
 	}
 })
 
-
+router.put('/config', async (req,res) => {
+	try {
+		var owner_id = req.decoded_token.id
+		let obj = { 
+			darktheme: req.body.darktheme,
+		}
+		await knex('user').where('id', owner_id).update({config: JSON.stringify(obj)})
+	} catch (error) {
+		
+	}
+})
 
 router.put('/todo/:id', async (req, res) => {
 	console.log('Put Request \n');
