@@ -1,30 +1,38 @@
 <template>
   <v-app>
-    <!-- <v-card square style="height: 100vh; position: absolute" fluid color="secondary"></v-card> -->
-    <v-app-bar app color="primary" dark>
-      <v-toolbar-title>Application</v-toolbar-title>
+    <v-app-bar v-if="user" tile  color="primary" dark>
+      <span style="margin-right: 20px">
+        <v-menu transition="slide-x-transition"  offset-y :close-on-click="true" :close-on-content-click="false">
+          <template v-slot:activator="{ on }">
+            <v-btn v-on="on" icon>
+              <v-icon large>person</v-icon>
+            </v-btn>
+          </template>
+          <v-card :dark="darktheme">
+            <v-list>
+              <v-list-item>
+                <v-switch
+                  label="Toggle dark theme"
+                  right
+                  v-model="darktheme"
+                  @change="set_config()"
+                ></v-switch>
+              </v-list-item>
+            </v-list>
+          </v-card>
+        </v-menu>
+        <strong>Logged in as {{ user.username }}</strong>
+      </span>
       <v-spacer></v-spacer>
-      <div>
-        <v-icon>person</v-icon>
-        <span v-if="user" style="margin-right: 20px">
-          <strong>Logged in as {{ user.username }}</strong>
-        </span>
-      </div>
-
-      <v-btn color="white" v-if="user" text @click="logout" outlined>
+      <v-btn color="white" text @click="logout" outlined>
         <strong>Logout</strong>
+        <v-icon>mdi-account-arrow-left</v-icon>
       </v-btn>
     </v-app-bar>
-
-    <v-content fluid style="margin-bottom: 75Dpx">
-      <v-sheet height="100vh" :dark="darktheme">
-        <router-view
-          v-bind:darktheme="darktheme"
-          v-on:set_config="set_config"
-          v-on:set_login_variables="set_login_variables"
-        ></router-view>
+    <!-- <v-divider style="margin-bottom:50px"></v-divider> -->
+      <v-sheet tile min-height="100vh" fluid :dark="darktheme">
+        <router-view v-bind:darktheme="darktheme" v-on:set_login_variables="set_login_variables"></router-view>
       </v-sheet>
-    </v-content>
 
     <v-footer color="primary" fluid>
       <span class="white--text">&copy; 2019</span>
@@ -41,15 +49,16 @@ import axios from "./api";
 export default {
   data: () => ({
     user: "",
-    darktheme: false
+    darktheme: null
   }),
   computed: {},
   mounted() {
     this.set_login_variables();
   },
   methods: {
-    async set_config(config) {
-      this.darktheme = !this.darktheme;
+    async set_config() {
+      console.log(this.darktheme);
+
       await axios().put("/api/config", {
         darktheme: this.darktheme
       });
@@ -61,8 +70,9 @@ export default {
     },
     set_login_variables() {
       this.user = JSON.parse(localStorage.getItem("user"));
+      // console.log(this.user.config.darktheme);
 
-      this.darktheme =(this.user) ?  this.user.config.darktheme: null
+      this.darktheme = this.user ? this.user.config.darktheme : null;
     }
   }
 };

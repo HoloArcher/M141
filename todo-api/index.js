@@ -33,6 +33,8 @@ app.post('/login/', logger, async function (req, res) {
       username: user.username,
       config: JSON.parse(user.config)
     }
+    console.log(tokendata);
+    
     var token = jwt.sign(tokendata, process.env.JWT_TOKEN);
     var auth = 'Bearer ' + token
     res.send({ token: auth, user: tokendata }).status(200);

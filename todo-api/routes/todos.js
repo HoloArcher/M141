@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 var knex = require('../db/knex');
 
-router.get('/todo/users', async (req, res) => {
-	let data = await knex('user').select('username');
-	res.send(data);
-})
+// router.get('/todo/users', async (req, res) => {
+// 	let data = await knex('user').select('username');
+// 	res.send(data);
+// })
 
 router.get('/todo/priorities', async (req, res) => {
 	let data = await knex('priority');

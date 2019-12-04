@@ -1,21 +1,16 @@
 <template>
   <v-app>
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"
-      rel="stylesheet"
-    />
-    <v-container>
-      <v-row align="center" justify="center">
+    <v-container fluid class='fill-height'>
+      <v-row justify="center" align="center">
         <v-col cols="12" sm="8" md="4">
           <v-card class="elevation-12">
             <v-toolbar color="primary" dark flat>
               <v-toolbar-title>Login</v-toolbar-title>
-     
 
               <v-spacer />
             </v-toolbar>
-              <v-form @submit="login" lazy-validation v-model="valid" ref="form">
-            <v-card-text>
+            <v-form @submit="login" lazy-validation v-model="valid" ref="form">
+              <v-card-text>
                 <v-text-field
                   label="Username"
                   name="todo_username"
@@ -33,14 +28,13 @@
                   type="password"
                   :rules="rules"
                   @change="login"
-                
                 />
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer />
-              <v-btn  @click="login"  color="primary">Login</v-btn>
-            </v-card-actions>
-              </v-form>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer />
+                <v-btn @click="login" color="primary">Login</v-btn>
+              </v-card-actions>
+            </v-form>
           </v-card>
         </v-col>
       </v-row>
@@ -77,19 +71,12 @@ export default {
         var response = await axios().post("/login", data);
         var token = response.data.token.split(" ")[1];
         var user = response.data.user;
-        localStorage.setItem('user', JSON.stringify(user))
+        localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("token", token);
-        this.$emit('set_login_variables')
-        this.$router.push('/todos')
-
+        this.$emit("set_login_variables");
+        this.$router.push("/todos");
       }
     }
   }
 };
 </script>
-
-<style lang="css">
-html{
-  overflow-y: hidden;
-}
-</style>
