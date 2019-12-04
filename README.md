@@ -44,10 +44,12 @@ Das Projekt: Todo-App.
 	* evt. noch die daten in eine file speichern
 * Files aufgesplittet um Modularitaet zu gewinnen
 * bug fixes und code verschloenert
-#### Todo 
 * frontend anpassen
 	* views erstellen
 	 	* /login | die seite aufder man kommt wenn man nicht eingeloggt ist bzw. ein invaliden token hat
+#### Tag 3
+	* presentation vorbereiten
+	* kleine UI anpassungen
 
 
 

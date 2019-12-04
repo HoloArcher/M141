@@ -1,0 +1,22 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "description": "Es soll für die aktuelle Todo-App Projekt einen Benutzer Login erstellt werden. Dazu das Datenbank Schema mittels knex kreiert werden.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "init": "cd ./todo-api && npm i && knex migrate:latest",
+    "run": "start nodemon ./todo-api/index.js && start cmd /K \"cd ./todo-ui &&  npm run serve\" ",
+    "build": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tfbern/todo-app.git"
+  },
+  "author": "josiah schiess",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tfbern/todo-app/issues"
+  },
+  "homepage": "https://github.com/tfbern/todo-app#readme"
+}
