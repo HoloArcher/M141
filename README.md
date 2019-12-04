@@ -50,9 +50,12 @@ Das Projekt: Todo-App.
 #### Tag 3
 	* kleine UI anpassungen
 	* bug fix mit todos erstellen
+	* migration user_group erstellt.
+		* foreign key zu group und user erstellt
 
 ### todo 
 	* presentation vorbereiten
+	* gruppen implimentation
 
 
 
