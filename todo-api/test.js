@@ -76,8 +76,8 @@ console.log('CRUD POST');
 console.log('CRUD ALTER')
 
 var options = {
-	method: 'PUT',
-	url: 'http://localhost:3000/api/todo/154',
+	method: 'GET',
+	url: 'http://localhost:3000/api/todo',
 	headers:
 	{
 		'cache-control': 'no-cache',
@@ -106,7 +106,7 @@ var options = {
 request(options, function (error, response, body) {
 	if (error) throw new Error(error);
 
-	console.log(body);
+	console.log(response);
 });
 
 

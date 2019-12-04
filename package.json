@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "init": "cd ./todo-api && npm i && knex migrate:latest",
-    "run": "start nodemon ./todo-api/index.js && start cmd /K \"cd ./todo-ui &&  npm run serve\" ",
+    "run": "start cmd /K \"cd ./todo-api && nodemon\" && start cmd /K \"cd ./todo-ui &&  npm run serve\" ",
     "build": ""
   },
   "repository": {
